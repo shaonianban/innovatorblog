@@ -79,10 +79,14 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="河马马，冲啊">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="什么是JS事件机制？描述的是事件在DOM中的传递顺序。 JS事件机制分为多少阶段？分为三个阶段 1231.事件捕获阶段：从window开始向目标一层一层传递的阶段2.目标阶段：比如我点击了a模块，当事件到达模块的阶段（目标阶段，事件的执行顺序是按照代码的顺序）3.事件冒泡阶段：从目标事件传递到了window的阶段 如何知道处于哪个阶段？事件对象有个属性为：eventPhase属性。 123even">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS事件机制">
+<meta property="og:url" content="http://yoursite.com/2020/06/21/JS%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="河马马，冲啊">
+<meta property="og:description" content="什么是JS事件机制？描述的是事件在DOM中的传递顺序。 JS事件机制分为多少阶段？分为三个阶段 1231.事件捕获阶段：从window开始向目标一层一层传递的阶段2.目标阶段：比如我点击了a模块，当事件到达模块的阶段（目标阶段，事件的执行顺序是按照代码的顺序）3.事件冒泡阶段：从目标事件传递到了window的阶段 如何知道处于哪个阶段？事件对象有个属性为：eventPhase属性。 123even">
+<meta property="article:published_time" content="2020-06-21T07:09:29.060Z">
+<meta property="article:modified_time" content="2020-06-23T07:44:10.559Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
@@ -114,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/06/21/JS事件机制/"/>
 
 
 
 
 
-  <title>河马马，冲啊</title>
+  <title>JS事件机制 | 河马马，冲啊</title>
   
 
 
@@ -139,8 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -243,9 +246,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -275,9 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/innovatorblog/2020/06/21/JS%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/" itemprop="url">JS事件机制</a></h1>
+          <h1 class="post-title" itemprop="name headline">JS事件机制</h1>
         
 
         <div class="post-meta">
@@ -327,9 +328,7 @@
       
 
       
-        
-          
-            <h2 id="什么是JS事件机制？"><a href="#什么是JS事件机制？" class="headerlink" title="什么是JS事件机制？"></a>什么是JS事件机制？</h2><p>描述的是事件在DOM中的传递顺序。</p>
+        <h2 id="什么是JS事件机制？"><a href="#什么是JS事件机制？" class="headerlink" title="什么是JS事件机制？"></a>什么是JS事件机制？</h2><p>描述的是事件在DOM中的传递顺序。</p>
 <h2 id="JS事件机制分为多少阶段？"><a href="#JS事件机制分为多少阶段？" class="headerlink" title="JS事件机制分为多少阶段？"></a>JS事件机制分为多少阶段？</h2><p>分为三个阶段</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.事件捕获阶段：从window开始向目标一层一层传递的阶段</span><br><span class="line">2.目标阶段：比如我点击了a模块，当事件到达模块的阶段（目标阶段，事件的执行顺序是按照代码的顺序）</span><br><span class="line">3.事件冒泡阶段：从目标事件传递到了window的阶段</span><br></pre></td></tr></table></figure>
 <p><strong>如何知道处于哪个阶段？</strong><br>事件对象有个属性为：eventPhase属性。</p>
@@ -361,8 +360,6 @@ https://wufenfen.github.io/2017/03/04/JS%E4%BA%8B%E4%BB%B6%E7%AE%80%E5%8D%95%E6%
 https://juejin.im/post/5aba6a7cf265da23830aebb6
  -->
 
-          
-        
       
     </div>
     
@@ -379,12 +376,12 @@ https://juejin.im/post/5aba6a7cf265da23830aebb6
       
 
       
+      
+      
 
       
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -394,10 +391,11 @@ https://juejin.im/post/5aba6a7cf265da23830aebb6
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -405,6 +403,10 @@ https://juejin.im/post/5aba6a7cf265da23830aebb6
 
 
           
+
+  
+
+
 
         </div>
         
@@ -425,8 +427,17 @@ https://juejin.im/post/5aba6a7cf265da23830aebb6
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -468,6 +479,22 @@ https://juejin.im/post/5aba6a7cf265da23830aebb6
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是JS事件机制？"><span class="nav-number">1.</span> <span class="nav-text">什么是JS事件机制？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS事件机制分为多少阶段？"><span class="nav-number">2.</span> <span class="nav-text">JS事件机制分为多少阶段？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">3.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是DOM分级？"><span class="nav-number">4.</span> <span class="nav-text">什么是DOM分级？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是事件捕获？"><span class="nav-number">5.</span> <span class="nav-text">什么是事件捕获？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是事件冒泡？"><span class="nav-number">6.</span> <span class="nav-text">什么是事件冒泡？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件的执行顺序"><span class="nav-number">7.</span> <span class="nav-text">事件的执行顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么阻止事件冒泡？"><span class="nav-number">8.</span> <span class="nav-text">怎么阻止事件冒泡？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件委托原理"><span class="nav-number">9.</span> <span class="nav-text">事件委托原理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -601,6 +628,10 @@ https://juejin.im/post/5aba6a7cf265da23830aebb6
   
 
   
+  <script type="text/javascript" src="/innovatorblog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/innovatorblog/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
