@@ -329,8 +329,15 @@
       
         
           
-            
           
+          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/innovatorblog/2020/06/25/%E4%BD%9C%E7%94%A8%E5%9F%9F/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -470,45 +477,17 @@
       
         
           
-            <h5 id="什么是闭包？"><a href="#什么是闭包？" class="headerlink" title="什么是闭包？"></a>什么是闭包？</h5><p>能够读取其他函数内部变量的函数<br>本质定义：闭包就是将函数内部和函数外部连接起来的一座桥梁。</p>
-<h4 id="要理解闭包为什么存在，需要先了解作用域"><a href="#要理解闭包为什么存在，需要先了解作用域" class="headerlink" title="要理解闭包为什么存在，需要先了解作用域"></a>要理解闭包为什么存在，需要先了解作用域</h4><p>变量的作用域：全局变量和局部变量<br>JS的特殊之处：函数内部可以直接读取全局变量，在函数外部无法读取函数内部的局部变量</p>
-<h4 id="闭包是怎么读取函数内部变量"><a href="#闭包是怎么读取函数内部变量" class="headerlink" title="闭包是怎么读取函数内部变量"></a>闭包是怎么读取函数内部变量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function f1()&#123;</span><br><span class="line">　var n&#x3D;999;</span><br><span class="line">　return function f2()&#123;</span><br><span class="line">　　alert(n); &#x2F;&#x2F; 999</span><br><span class="line">　&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>f2函数包含在f1函数中，所以f1的所有变量对f2是可见的。这是因为Js语音特有的链接作用域结构：子对象会一层一层的往上找父对象的变量。所以父对象的变量对子对象都是可见的，反之则不成立。</p>
-<p>所以只要把f2作为f1的返回值，就可以读取f1的变量。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var result&#x3D;f1();</span><br><span class="line">result(); &#x2F;&#x2F; 999</span><br></pre></td></tr></table></figure>
-
-<h4 id="闭包的用途"><a href="#闭包的用途" class="headerlink" title="闭包的用途"></a>闭包的用途</h4><p>可以读取函数内部的变量<br>让变量始终保持内存中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function f1()&#123;</span><br><span class="line">　var n&#x3D;999;</span><br><span class="line">　nAdd&#x3D;function()&#123;n+&#x3D;1&#125; &#x2F;&#x2F; nAdd在函数声明时，没有加var，所以nAdd是一个全局变量。</span><br><span class="line">　function f2()&#123;</span><br><span class="line">　　alert(n);</span><br><span class="line">　&#125;</span><br><span class="line">　return f2;</span><br><span class="line">&#125;</span><br><span class="line">var result&#x3D;f1();</span><br><span class="line">result(); &#x2F;&#x2F; 999</span><br><span class="line">nAdd();</span><br><span class="line">result(); &#x2F;&#x2F; 1000</span><br></pre></td></tr></table></figure>
-<p>用以上的代码来解释一下为什么会一直存在内存中：<br>f1是f2的父函数，而f2通过f1的return出来赋值给了result,所以f2就会一直在内存中，而f2依赖于f1，因此f1也始终在内存中，并没有在f1被调用后被自动清除。</p>
-<h4 id="使用闭包的注意点"><a href="#使用闭包的注意点" class="headerlink" title="使用闭包的注意点"></a>使用闭包的注意点</h4><p>闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，<br>解决：在退出函数之前，将不使用的局部变量全部删除。</p>
-<h4 id="在工作的场景中，是怎么使用闭包的"><a href="#在工作的场景中，是怎么使用闭包的" class="headerlink" title="在工作的场景中，是怎么使用闭包的"></a>在工作的场景中，是怎么使用闭包的</h4><p>1.封装局部变量<br>例如在系统中记录一个人的年龄，我可以通过obj.age的方式定义，但是特别容易被误改，可以把它定义为局部变量，且只能增加不能减少。毕竟没有谁可以越活越年少。代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var box &#x3D; (function ()&#123;</span><br><span class="line">    var age &#x3D; 18;</span><br><span class="line">    return &#123;</span><br><span class="line">        birthday : function()&#123;</span><br><span class="line">            age++;</span><br><span class="line">        &#125;,</span><br><span class="line">        sayAge : function()&#123;</span><br><span class="line">            console.log(age);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line">box.birthday();</span><br><span class="line">box.sayAge(); &#x2F;&#x2F; 19</span><br></pre></td></tr></table></figure>
-
-<h4 id="相关面试题"><a href="#相关面试题" class="headerlink" title="相关面试题"></a>相关面试题</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (var i&#x3D;1; i&lt;&#x3D;5; i++)&#123;</span><br><span class="line">	setTimeout(function()&#123;</span><br><span class="line">		console.log(i);</span><br><span class="line">  &#125;,1000);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果：在1秒内，输出五个6<br><strong>为什么我的定时是1000,但是会在1秒内执行完所有</strong><br>因为 for 循环会先执行完（同步优先于异步优先于回调），这时五个 setTimeout 的回调全部塞入了事件队列中，然后 1 秒后一起执行了</p>
-<p><strong>为什么会一直输出6而不是1,2,3,4,5</strong><br>是因为setTimeout是异步的原因，会先把同步代码执行完，再执行异步代码。由于var是属于函数作用域的变量，同步代码执行完成后，var i 就变成了6.那为什么改成let就可以解决这个问题呢？因为let是针对每个{}生成单独的作用域。</p>
-<p><strong>怎么让它输出1,2,3,4,5</strong><br>思想主旨：将作用域划分开</p>
-<p>方式一：闭包的方式就可以生成单独的作用域</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for (var i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">    (function(j) &#123;  &#x2F;&#x2F; j &#x3D; i</span><br><span class="line">        setTimeout(function() &#123;</span><br><span class="line">            console.log(new Date, j);</span><br><span class="line">        &#125;, 1000);</span><br><span class="line">    &#125;)(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>方式二：es6新语法 let</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (let i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">    setTimeout(function() &#123;</span><br><span class="line">        console.log(new Date, i);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>对于var的运行路径：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var i &#x3D; 0；</span><br><span class="line">i++;</span><br><span class="line">i++;</span><br><span class="line">i++;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    setTimeout(function() &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>对于let的运行路径：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    let i &#x3D; 0;</span><br><span class="line">    setTimeout(function() &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">    let i &#x3D; 1;</span><br><span class="line">    setTimeout(function() &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>方式三：setTimeout Api，第三个参数即向定时器方法传值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (var i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">    setTimeout(function(j) &#123;</span><br><span class="line">        console.log(new Date, j);</span><br><span class="line">    &#125;, 1000, i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>衍生需求：代码执行时，立即输出 0，之后每隔 1 秒依次输出 1,2,3,4，循环结束后在大概第 5 秒的时候输出 5</strong><br><strong>考察点1：Promise</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const tasks &#x3D; [];</span><br><span class="line">for (var i &#x3D; 0; i &lt; 5; i++) &#123;   &#x2F;&#x2F; 这里 i 的声明不能改成 let，如果要改该怎么做？</span><br><span class="line">    ((j) &#x3D;&gt; &#123;</span><br><span class="line">        tasks.push(new Promise((resolve) &#x3D;&gt; &#123;</span><br><span class="line">            setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">                console.log(new Date, j);</span><br><span class="line">                resolve();  &#x2F;&#x2F; 这里一定要 resolve，否则代码不会按预期 work</span><br><span class="line">            &#125;, 1000 * j);   &#x2F;&#x2F; 定时器的超时时间逐步增加</span><br><span class="line">        &#125;));</span><br><span class="line">    &#125;)(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Promise.all(tasks).then(() &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(new Date, i);</span><br><span class="line">    &#125;, 1000);   &#x2F;&#x2F; 注意这里只需要把超时设置为 1 秒</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>颗粒度更小的代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const tasks &#x3D; []; &#x2F;&#x2F; 这里存放异步操作的 Promise</span><br><span class="line">const output &#x3D; (i) &#x3D;&gt; new Promise((resolve) &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(new Date, i);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;, 1000 * i);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 生成全部的异步操作</span><br><span class="line">for (var i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">    tasks.push(output(i));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 异步操作完成之后，输出最后的 i</span><br><span class="line">Promise.all(tasks).then(() &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(new Date, i);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p><strong>考察点2：ES7 中的 async/await</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 模拟其他语言中的 sleep，实际上可以是任何异步操作</span><br><span class="line">const sleep &#x3D; (timeountMS) &#x3D;&gt; new Promise((resolve) &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(resolve, timeountMS);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">(async () &#x3D;&gt; &#123;  &#x2F;&#x2F; 声明即执行的 async 函数表达式</span><br><span class="line">    for (var i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">        if (i &gt; 0) &#123;</span><br><span class="line">            await sleep(1000);</span><br><span class="line">        &#125;</span><br><span class="line">        console.log(new Date, i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    await sleep(1000);</span><br><span class="line">    console.log(new Date, i);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
-          
+          什么是闭包？能够读取其他函数内部变量的函数本质定义：闭包就是将函数内部和函数外部连接起来的一座桥梁。
+要理解闭包为什么存在，需要先了解作用域变量的作用域：全局变量和局部变量JS的特殊之处：函数内部可以直接读取全局变量，在函数外部无法读取函数内部的局部变量
+闭包是怎么读取函数内部变量123456fun
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/innovatorblog/2020/06/24/%E9%97%AD%E5%8C%85/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -648,39 +627,17 @@
       
         
           
-            <h2 id="什么是JS事件机制？"><a href="#什么是JS事件机制？" class="headerlink" title="什么是JS事件机制？"></a>什么是JS事件机制？</h2><p>描述的是事件在DOM中的传递顺序。</p>
-<h2 id="JS事件机制分为多少阶段？"><a href="#JS事件机制分为多少阶段？" class="headerlink" title="JS事件机制分为多少阶段？"></a>JS事件机制分为多少阶段？</h2><p>分为三个阶段</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.事件捕获阶段：从window开始向目标一层一层传递的阶段</span><br><span class="line">2.目标阶段：比如我点击了a模块，当事件到达模块的阶段（目标阶段，事件的执行顺序是按照代码的顺序）</span><br><span class="line">3.事件冒泡阶段：从目标事件传递到了window的阶段</span><br></pre></td></tr></table></figure>
-<p><strong>如何知道处于哪个阶段？</strong><br>事件对象有个属性为：eventPhase属性。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">eventPhase为1时：捕获阶段CAPTURING_PHASE</span><br><span class="line">eventPhase为2时：目标阶段AT_TARGET</span><br><span class="line">eventPhase为3时：冒泡阶段BUBBLING_PHASE</span><br></pre></td></tr></table></figure>
-
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>网景公司和微软在90年代的战争，远近驰名，网景出品的网景浏览器堪称划时代的发明，而微软是做window系统，也有自已的浏览器IE，所以他们也就成为了彼此最大的竞争对手。当时，网景主张的是事件捕获，而微软主张的是事件冒泡。后来W3C采用了折中的方案，平息了战火，制定了统一的标准: <strong>先捕获后冒泡</strong></p>
-<h2 id="什么是DOM分级？"><a href="#什么是DOM分级？" class="headerlink" title="什么是DOM分级？"></a>什么是DOM分级？</h2><p>DOM事件流分为四级：DOM0 . DOM1 . DOM2 . DOM3<br>事件捕获冒泡是在DOM2级时期发生的</p>
-<h2 id="什么是事件捕获？"><a href="#什么是事件捕获？" class="headerlink" title="什么是事件捕获？"></a>什么是事件捕获？</h2><p>通俗的说：当你在挖矿的时候，是要从最外面的一层挖到最里面的一层。</p>
-<h2 id="什么是事件冒泡？"><a href="#什么是事件冒泡？" class="headerlink" title="什么是事件冒泡？"></a>什么是事件冒泡？</h2><p>通俗的说：当你把一块石头丢进水里的时候，水花是从里面到外面蔓延开的。<br>注意：IE8及以下的浏览器只有冒泡</p>
-<h2 id="事件的执行顺序"><a href="#事件的执行顺序" class="headerlink" title="事件的执行顺序"></a>事件的执行顺序</h2><p>通过以下例子详细讲解，事件的执行顺序是怎么样的<br><strong>基础铺垫</strong><br>例子中用到一个方法为，addEventListener,包含三个参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">event: 必填，指定事件名，如click.</span><br><span class="line">function: 必填，事件触发时执行的函数</span><br><span class="line">useCapture: 可选，boolean值，当为true时，事件在捕获时执行，当为false时，事件在冒泡时执行</span><br><span class="line">默认为false</span><br></pre></td></tr></table></figure>
-<p><strong>实例</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HTML</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id&#x3D;&quot;parent&quot; onclick&#x3D;&quot;parentCB(window.event)&quot;&gt;</span><br><span class="line">    &lt;div id&#x3D;&quot;child&quot; onclick&#x3D;&quot;childCB(window.event)&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line"> &lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">JS</span><br><span class="line">function parentCB(e) &#123;</span><br><span class="line">  console.log(&#39;HTML代码中parent的onClick: [parent] dom0 html&#39;);</span><br><span class="line">&#125;</span><br><span class="line">function childCB(e) &#123;</span><br><span class="line">  console.log(&#39;HTML代码中child的onClick: [child] dom0 html &#39;);</span><br><span class="line">&#125;</span><br><span class="line">var parent &#x3D; document.getElementById(&#39;parent&#39;);</span><br><span class="line">parent.onclick &#x3D; function (e) &#123;</span><br><span class="line">  console.log(&#39;JS代码中parent的onClick: parent dom0 js &#39;);</span><br><span class="line">&#125;;</span><br><span class="line">parent.addEventListener(&#39;click&#39;, function (e) &#123;</span><br><span class="line">  console.log(&#96;$&#123;e.eventPhase &#x3D;&#x3D;&#x3D; 2 ? &#39;目标阶段&#39; : &#39;事件冒泡&#39;&#125;: [parent]&#96;);</span><br><span class="line">&#125;);</span><br><span class="line">parent.addEventListener(</span><br><span class="line">  &#39;click&#39;,</span><br><span class="line">  function (e) &#123;</span><br><span class="line">    console.log(</span><br><span class="line">      &#96;$&#123;e.eventPhase &#x3D;&#x3D;&#x3D; 2 ? &#39;目标阶段&#39; : &#39;事件捕获&#39;&#125;: [parent]&#96;</span><br><span class="line">    );</span><br><span class="line">  &#125;,</span><br><span class="line">  true</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">var child &#x3D; document.getElementById(&#39;child&#39;);</span><br><span class="line">child.addEventListener(&#39;click&#39;, function (e) &#123;</span><br><span class="line">  console.log(&#96;$&#123;e.eventPhase &#x3D;&#x3D;&#x3D; 2 ? &#39;目标阶段&#39; : &#39;事件冒泡&#39;&#125;: [child]&#96;);</span><br><span class="line">&#125;);</span><br><span class="line">child.addEventListener(</span><br><span class="line">  &#39;click&#39;,</span><br><span class="line">  function (e) &#123;</span><br><span class="line">    console.log(&#96;$&#123;e.eventPhase &#x3D;&#x3D;&#x3D; 2 ? &#39;目标阶段&#39; : &#39;事件捕获&#39;&#125;: [child]&#96;);</span><br><span class="line">  &#125;,</span><br><span class="line">  true</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CSS</span><br><span class="line">#parent &#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">  background: pink;</span><br><span class="line">&#125;</span><br><span class="line">#child &#123;</span><br><span class="line">  width: 200px;</span><br><span class="line">  height: 200px;</span><br><span class="line">  background: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>规律总结：</strong><br>1.不是目标阶段时，捕获比冒泡先执行<br>2.目标阶段阶段时，执行顺序依据代码的顺序执行<br>3.js中的onclick方法会覆盖html的onclick</p>
-<h2 id="怎么阻止事件冒泡？"><a href="#怎么阻止事件冒泡？" class="headerlink" title="怎么阻止事件冒泡？"></a>怎么阻止事件冒泡？</h2><p><strong>stopPropagation</strong><br>可以阻止冒泡，但是不能阻止同一节点的其他监听事件执行，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我在child的监听方法中绑定了e.stopPropagation(),我点击了child,child的其他监听方法**会继续执行**，但是parent的监听方法不会执行了。</span><br></pre></td></tr></table></figure>
-
-<p><strong>stopImmediatePropagation</strong><br>同样可以阻止冒泡，但是也会阻止同一节点的其他监听事件执行，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我在child的监听方法中绑定了e.stopImmediatePropagation(),我点击了child,child的其他监听方法**不会继续执行**，parent的监听方法也不会执行了。</span><br></pre></td></tr></table></figure>
-
-<h2 id="事件委托原理"><a href="#事件委托原理" class="headerlink" title="事件委托原理"></a>事件委托原理</h2><p><strong>什么是事件委托？</strong><br>通过冒泡机制，把一个元素响应事件的函数委托到另一个元素。<br>例如：有一个很多子项的无序列表，需要监听子项的事件，那就要把事件绑定在ul上。因为点击li时，因为冒泡机制，ul层也能触发点击事件。<br>那么如何知道点击的是li元素，用事件对象event.target判断即可<br>优点：<br>从监听多个事件减少到监听一个事件，效率得到了提升。<br>按传统的方法，增加一个li,则需手动添加一个事件，事件委托则是以不变应万变。</p>
-<!-- 
-## 参考链接
-个人博客
-https://wufenfen.github.io/2017/03/04/JS%E4%BA%8B%E4%BB%B6%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/
-掘金
-https://juejin.im/post/5aba6a7cf265da23830aebb6
- -->
-
-          
+          什么是JS事件机制？描述的是事件在DOM中的传递顺序。
+JS事件机制分为多少阶段？分为三个阶段
+1231.事件捕获阶段：从window开始向目标一层一层传递的阶段2.目标阶段：比如我点击了a模块，当事件到达模块的阶段（目标阶段，事件的执行顺序是按照代码的顺序）3.事件冒泡阶段：从目标事件传递到了wi
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/innovatorblog/2020/06/21/JS%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -841,8 +798,28 @@ https://juejin.im/post/5aba6a7cf265da23830aebb6
 
 
 
-
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
         
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
