@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/innovatorblog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/innovatorblog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/innovatorblog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/innovatorblog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/innovatorblog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/innovatorblog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/innovatorblog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="非常重要," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="继承的历史发展原型链继承123456789101112131415&#x2F;&#x2F; 父类型function Parent () &amp;#123;    this.name &#x3D; &#39;kevin&#39;;&amp;#125;Parent.prototype.getName &#x3D; function () &amp;#123;    console.log(this.name);&amp;#125;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS继承">
+<meta property="og:url" content="http://yoursite.com/2020/06/27/JS%E7%BB%A7%E6%89%BF/index.html">
+<meta property="og:site_name" content="河马马，冲啊">
+<meta property="og:description" content="继承的历史发展原型链继承123456789101112131415&#x2F;&#x2F; 父类型function Parent () &amp;#123;    this.name &#x3D; &#39;kevin&#39;;&amp;#125;Parent.prototype.getName &#x3D; function () &amp;#123;    console.log(this.name);&amp;#125;">
+<meta property="article:published_time" content="2020-06-27T06:28:19.439Z">
+<meta property="article:modified_time" content="2020-06-27T16:16:12.827Z">
+<meta property="article:author" content="河马马">
+<meta property="article:tag" content="非常重要">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/innovatorblog/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/27/JS继承/"/>
+
+
+
+
+
+  <title>JS继承 | 河马马，冲啊</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/innovatorblog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">河马马，冲啊</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/innovatorblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/innovatorblog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/innovatorblog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/innovatorblog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/innovatorblog/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/innovatorblog/2020/06/27/JS%E7%BB%A7%E6%89%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="河马马">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/innovatorblog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="河马马，冲啊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS继承</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-27T14:28:19+08:00">
+                2020-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/innovatorblog/categories/JS%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
+                    <span itemprop="name">JS基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="继承的历史发展"><a href="#继承的历史发展" class="headerlink" title="继承的历史发展"></a>继承的历史发展</h4><h4 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 父类型</span><br><span class="line">function Parent () &#123;</span><br><span class="line">    this.name &#x3D; &#39;kevin&#39;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Parent.prototype.getName &#x3D; function () &#123;</span><br><span class="line">    console.log(this.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 子类型</span><br><span class="line">function Child () &#123;&#125;</span><br><span class="line"></span><br><span class="line">Child.prototype &#x3D; new Parent(); &#x2F;&#x2F; 改变子类的原型链</span><br><span class="line">var child1 &#x3D; new Child();</span><br><span class="line">console.log(child1.getName()) &#x2F;&#x2F; kevin</span><br></pre></td></tr></table></figure>
+<p>通过把Parent的实例赋值给Child的原型链，来实现继承，例如Child.getName()这个方法在Child的属性中找不到，就会来Child的原型链上去找，最后找到了Parent类中的getName方法。</p>
+<p>优点：<br>1.父类新增的原型方法/属性，子类都可以访问到</p>
+<p>缺点：<br>1.无法实现多继承<br>2.来自原型对象的所有属性被所有实例共享,容易误改<br>3.创建子类实例时，无法向父类构造函数传参（TODO）<br>4.要在子类的原型链上添加方法和属性，需要在Child.prototype = new Parent()这句话之后才会生效（TODO）</p>
+<h4 id="构造函数继承"><a href="#构造函数继承" class="headerlink" title="构造函数继承"></a>构造函数继承</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function Parent () &#123;</span><br><span class="line">    this.names &#x3D; [&#39;kevin&#39;, &#39;daisy&#39;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function Child () &#123;</span><br><span class="line">    Parent.call(this); &#x2F;&#x2F;继承关键</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var child1 &#x3D; new Child();</span><br><span class="line">child1.names.push(&#39;yayu&#39;);</span><br><span class="line">console.log(child1.names); &#x2F;&#x2F; [&quot;kevin&quot;, &quot;daisy&quot;, &quot;yayu&quot;]</span><br><span class="line">var child2 &#x3D; new Child();</span><br><span class="line">console.log(child2.names); &#x2F;&#x2F; [&quot;kevin&quot;, &quot;daisy&quot;]</span><br></pre></td></tr></table></figure>
+<p>优点：<br>1.避免了引用类型的属性被所有实例共享<br>2.可以在 Child 中向 Parent 传参<br>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function Parent (name) &#123;</span><br><span class="line">    this.name &#x3D; name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function Child (name) &#123;</span><br><span class="line">    Parent.call(this, name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var child1 &#x3D; new Child(&#39;kevin&#39;);</span><br><span class="line"></span><br><span class="line">console.log(child1.name); &#x2F;&#x2F; kevin</span><br><span class="line"></span><br><span class="line">var child2 &#x3D; new Child(&#39;daisy&#39;);</span><br><span class="line"></span><br><span class="line">console.log(child2.name); &#x2F;&#x2F; daisy</span><br></pre></td></tr></table></figure>
+<p>缺点：<br>1.只可以复制父类的实例属性和方法，不能继承到原型链上的方法和属性<br>2.方法都在构造函数中定义，每次创建实例都会创建一遍方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function Parent () &#123;</span><br><span class="line">    this.names &#x3D; [&#39;kevin&#39;, &#39;daisy&#39;];</span><br><span class="line">&#125;</span><br><span class="line">function Child () &#123;</span><br><span class="line">    Parent.call(this); &#x2F;&#x2F;继承关键</span><br><span class="line">&#125;</span><br><span class="line">var child1 &#x3D; new Child()</span><br><span class="line">var child2 &#x3D; new Child()</span><br><span class="line">console.log(child1.names&#x3D;&#x3D;&#x3D;child2.names) &#x2F;&#x2F; false</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h4><p>其背后的思路是使用原型链实现对原型属性和方法的继承，而通过借用构造函数来实现对实例属性的继承。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">function Parent (name) &#123;</span><br><span class="line">    this.name &#x3D; name;</span><br><span class="line">    this.colors &#x3D; [&#39;red&#39;, &#39;blue&#39;, &#39;green&#39;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Parent.prototype.getName &#x3D; function () &#123;</span><br><span class="line">    console.log(this.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function Child (name, age) &#123;</span><br><span class="line"></span><br><span class="line">    Parent.call(this, name);</span><br><span class="line">    </span><br><span class="line">    this.age &#x3D; age;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Child.prototype &#x3D; new Parent();</span><br><span class="line">Child.prototype.constructor &#x3D; Child;</span><br><span class="line"></span><br><span class="line">var child1 &#x3D; new Child(&#39;kevin&#39;, &#39;18&#39;);</span><br><span class="line"></span><br><span class="line">child1.colors.push(&#39;black&#39;);</span><br><span class="line"></span><br><span class="line">console.log(child1.name); &#x2F;&#x2F; kevin</span><br><span class="line">console.log(child1.age); &#x2F;&#x2F; 18</span><br><span class="line">console.log(child1.colors); &#x2F;&#x2F; [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;, &quot;black&quot;]</span><br><span class="line"></span><br><span class="line">var child2 &#x3D; new Child(&#39;daisy&#39;, &#39;20&#39;);</span><br><span class="line"></span><br><span class="line">console.log(child2.name); &#x2F;&#x2F; daisy</span><br><span class="line">console.log(child2.age); &#x2F;&#x2F; 20</span><br><span class="line">console.log(child2.colors); &#x2F;&#x2F; [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;]</span><br></pre></td></tr></table></figure>
+<p>个人思路：为什么修改colors不会影响，是因为构造函数的复制导致每个子类都复制了父类的属性和方法，再通过原型链的方式绑定<br>如果在父类的原型链上加name,在子类中调整name还是会影响所有子类的<br>优点：<br>1.可以继承实例属性/方法，也可以继承原型属性/方法<br>2.不存在引用属性共享问题<br>3.可传参<br>4.函数可复用<br>缺点：<br>1.调用了两次父类构造函数，生成了两份实例<br>第一次调用Parent()：给Child.prototype写入两个属性name，colors。<br>第二次调用Parent()：给Child1写入两个属性name，colors。</p>
+<p>实例对象Child1上的两个属性就屏蔽了其原型对象Child.prototype的两个同名属性。所以，组合模式的缺点就是在使用子类创建实例对象时，会存在两份相同的属性/方法。</p>
+<h4 id="原型式继承"><a href="#原型式继承" class="headerlink" title="原型式继承"></a>原型式继承</h4><h4 id="寄生式继承"><a href="#寄生式继承" class="headerlink" title="寄生式继承"></a>寄生式继承</h4><h4 id="寄生组合式继承"><a href="#寄生组合式继承" class="headerlink" title="寄生组合式继承"></a>寄生组合式继承</h4><h4 id="ES6中的extends继承"><a href="#ES6中的extends继承" class="headerlink" title="ES6中的extends继承"></a>ES6中的extends继承</h4>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/innovatorblog/tags/%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81/" rel="tag"># 非常重要</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/innovatorblog/2020/06/26/%E9%93%BE%E8%A1%A8/" rel="next" title="链表">
+                <i class="fa fa-chevron-left"></i> 链表
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/innovatorblog/2020/06/27/%E5%8E%9F%E5%9E%8B%E9%93%BE/" rel="prev" title="原型链">
+                原型链 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">河马马</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/innovatorblog/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/innovatorblog/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/innovatorblog/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#继承的历史发展"><span class="nav-number">1.</span> <span class="nav-text">继承的历史发展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原型链继承"><span class="nav-number">2.</span> <span class="nav-text">原型链继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造函数继承"><span class="nav-number">3.</span> <span class="nav-text">构造函数继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组合继承"><span class="nav-number">4.</span> <span class="nav-text">组合继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原型式继承"><span class="nav-number">5.</span> <span class="nav-text">原型式继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#寄生式继承"><span class="nav-number">6.</span> <span class="nav-text">寄生式继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#寄生组合式继承"><span class="nav-number">7.</span> <span class="nav-text">寄生组合式继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES6中的extends继承"><span class="nav-number">8.</span> <span class="nav-text">ES6中的extends继承</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">河马马</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/innovatorblog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/innovatorblog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/innovatorblog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/innovatorblog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/innovatorblog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
