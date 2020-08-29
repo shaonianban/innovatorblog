@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/innovatorblog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/innovatorblog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/innovatorblog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/innovatorblog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/innovatorblog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/innovatorblog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/innovatorblog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="非常重要," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是闭包？能够读取其他函数内部变量的函数本质定义：闭包就是将函数内部和函数外部连接起来的一座桥梁。 要理解闭包为什么存在，需要先了解作用域变量的作用域：全局变量和局部变量JS的特殊之处：函数内部可以直接读取全局变量，在函数外部无法读取函数内部的局部变量 闭包是怎么读取函数内部变量123456function f1()&amp;#123;　var n&#x3D;999;　return function f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="闭包">
+<meta property="og:url" content="http://yoursite.com/2020/06/24/JS%E5%9F%BA%E7%A1%80/%E9%97%AD%E5%8C%85/index.html">
+<meta property="og:site_name" content="河马马，冲啊">
+<meta property="og:description" content="什么是闭包？能够读取其他函数内部变量的函数本质定义：闭包就是将函数内部和函数外部连接起来的一座桥梁。 要理解闭包为什么存在，需要先了解作用域变量的作用域：全局变量和局部变量JS的特殊之处：函数内部可以直接读取全局变量，在函数外部无法读取函数内部的局部变量 闭包是怎么读取函数内部变量123456function f1()&amp;#123;　var n&#x3D;999;　return function f">
+<meta property="article:published_time" content="2020-06-24T10:29:37.364Z">
+<meta property="article:modified_time" content="2020-07-01T09:20:23.050Z">
+<meta property="article:author" content="河马马">
+<meta property="article:tag" content="非常重要">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/innovatorblog/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/24/JS基础/闭包/"/>
+
+
+
+
+
+  <title>闭包 | 河马马，冲啊</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/innovatorblog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">河马马，冲啊</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/innovatorblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/innovatorblog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/innovatorblog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/innovatorblog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/innovatorblog/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/innovatorblog/2020/06/24/JS%E5%9F%BA%E7%A1%80/%E9%97%AD%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="河马马">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/innovatorblog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="河马马，冲啊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">闭包</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-24T18:29:37+08:00">
+                2020-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/innovatorblog/categories/JS%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
+                    <span itemprop="name">JS基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="什么是闭包？"><a href="#什么是闭包？" class="headerlink" title="什么是闭包？"></a>什么是闭包？</h5><p>能够读取其他函数内部变量的函数<br>本质定义：闭包就是将函数内部和函数外部连接起来的一座桥梁。</p>
+<h4 id="要理解闭包为什么存在，需要先了解作用域"><a href="#要理解闭包为什么存在，需要先了解作用域" class="headerlink" title="要理解闭包为什么存在，需要先了解作用域"></a>要理解闭包为什么存在，需要先了解作用域</h4><p>变量的作用域：全局变量和局部变量<br>JS的特殊之处：函数内部可以直接读取全局变量，在函数外部无法读取函数内部的局部变量</p>
+<h4 id="闭包是怎么读取函数内部变量"><a href="#闭包是怎么读取函数内部变量" class="headerlink" title="闭包是怎么读取函数内部变量"></a>闭包是怎么读取函数内部变量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function f1()&#123;</span><br><span class="line">　var n&#x3D;999;</span><br><span class="line">　return function f2()&#123;</span><br><span class="line">　　alert(n); &#x2F;&#x2F; 999</span><br><span class="line">　&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>f2函数包含在f1函数中，所以f1的所有变量对f2是可见的。这是因为Js语音特有的链接作用域结构：子对象会一层一层的往上找父对象的变量。所以父对象的变量对子对象都是可见的，反之则不成立。</p>
+<p>所以只要把f2作为f1的返回值，就可以读取f1的变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var result&#x3D;f1();</span><br><span class="line">result(); &#x2F;&#x2F; 999</span><br></pre></td></tr></table></figure>
+
+<h4 id="闭包的用途"><a href="#闭包的用途" class="headerlink" title="闭包的用途"></a>闭包的用途</h4><p>可以读取函数内部的变量<br>让变量始终保持内存中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function f1()&#123;</span><br><span class="line">　var n&#x3D;999;</span><br><span class="line">　nAdd&#x3D;function()&#123;n+&#x3D;1&#125; &#x2F;&#x2F; nAdd在函数声明时，没有加var，所以nAdd是一个全局变量。</span><br><span class="line">　function f2()&#123;</span><br><span class="line">　　alert(n);</span><br><span class="line">　&#125;</span><br><span class="line">　return f2;</span><br><span class="line">&#125;</span><br><span class="line">var result&#x3D;f1();</span><br><span class="line">result(); &#x2F;&#x2F; 999</span><br><span class="line">nAdd();</span><br><span class="line">result(); &#x2F;&#x2F; 1000</span><br></pre></td></tr></table></figure>
+<p>用以上的代码来解释一下为什么会一直存在内存中：<br>f1是f2的父函数，而f2通过f1的return出来赋值给了result,所以f2就会一直在内存中，而f2依赖于f1，因此f1也始终在内存中，并没有在f1被调用后被自动清除。</p>
+<h4 id="使用闭包的注意点"><a href="#使用闭包的注意点" class="headerlink" title="使用闭包的注意点"></a>使用闭包的注意点</h4><p>闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，<br>解决：在退出函数之前，将不使用的局部变量全部删除。</p>
+<h4 id="在工作的场景中，是怎么使用闭包的"><a href="#在工作的场景中，是怎么使用闭包的" class="headerlink" title="在工作的场景中，是怎么使用闭包的"></a>在工作的场景中，是怎么使用闭包的</h4><p>1.封装局部变量<br>例如在系统中记录一个人的年龄，我可以通过obj.age的方式定义，但是特别容易被误改，可以把它定义为局部变量，且只能增加不能减少。毕竟没有谁可以越活越年少。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var box &#x3D; (function ()&#123;</span><br><span class="line">    var age &#x3D; 18;</span><br><span class="line">    return &#123;</span><br><span class="line">        birthday : function()&#123;</span><br><span class="line">            age++;</span><br><span class="line">        &#125;,</span><br><span class="line">        sayAge : function()&#123;</span><br><span class="line">            console.log(age);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line">box.birthday();</span><br><span class="line">box.sayAge(); &#x2F;&#x2F; 19</span><br></pre></td></tr></table></figure>
+
+<h4 id="相关面试题"><a href="#相关面试题" class="headerlink" title="相关面试题"></a>相关面试题</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (var i&#x3D;1; i&lt;&#x3D;5; i++)&#123;</span><br><span class="line">	setTimeout(function()&#123;</span><br><span class="line">		console.log(i);</span><br><span class="line">  &#125;,1000);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：在1秒内，输出五个6<br><strong>为什么我的定时是1000,但是会在1秒内执行完所有</strong><br>因为 for 循环会先执行完（同步优先于异步优先于回调），这时五个 setTimeout 的回调全部塞入了事件队列中，然后 1 秒后一起执行了</p>
+<p><strong>为什么会一直输出6而不是1,2,3,4,5</strong><br>是因为setTimeout是异步的原因，会先把同步代码执行完，再执行异步代码。由于var是属于函数作用域的变量，同步代码执行完成后，var i 就变成了6.那为什么改成let就可以解决这个问题呢？因为let是针对每个{}生成单独的作用域。</p>
+<p><strong>怎么让它输出1,2,3,4,5</strong><br>思想主旨：将作用域划分开</p>
+<p>方式一：闭包的方式就可以生成单独的作用域</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for (var i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">    (function(j) &#123;  &#x2F;&#x2F; j &#x3D; i</span><br><span class="line">        setTimeout(function() &#123;</span><br><span class="line">            console.log(new Date, j);</span><br><span class="line">        &#125;, 1000);</span><br><span class="line">    &#125;)(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方式二：es6新语法 let</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (let i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">    setTimeout(function() &#123;</span><br><span class="line">        console.log(new Date, i);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于var的运行路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var i &#x3D; 0；</span><br><span class="line">i++;</span><br><span class="line">i++;</span><br><span class="line">i++;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    setTimeout(function() &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>对于let的运行路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    let i &#x3D; 0;</span><br><span class="line">    setTimeout(function() &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">    let i &#x3D; 1;</span><br><span class="line">    setTimeout(function() &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>方式三：setTimeout Api，第三个参数即向定时器方法传值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (var i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">    setTimeout(function(j) &#123;</span><br><span class="line">        console.log(new Date, j);</span><br><span class="line">    &#125;, 1000, i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>衍生需求：代码执行时，立即输出 0，之后每隔 1 秒依次输出 1,2,3,4，循环结束后在大概第 5 秒的时候输出 5</strong><br><strong>考察点1：Promise</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const tasks &#x3D; [];</span><br><span class="line">for (var i &#x3D; 0; i &lt; 5; i++) &#123;   &#x2F;&#x2F; 这里 i 的声明不能改成 let，如果要改该怎么做？</span><br><span class="line">    ((j) &#x3D;&gt; &#123;</span><br><span class="line">        tasks.push(new Promise((resolve) &#x3D;&gt; &#123;</span><br><span class="line">            setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">                console.log(new Date, j);</span><br><span class="line">                resolve();  &#x2F;&#x2F; 这里一定要 resolve，否则代码不会按预期 work</span><br><span class="line">            &#125;, 1000 * j);   &#x2F;&#x2F; 定时器的超时时间逐步增加</span><br><span class="line">        &#125;));</span><br><span class="line">    &#125;)(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Promise.all(tasks).then(() &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(new Date, i);</span><br><span class="line">    &#125;, 1000);   &#x2F;&#x2F; 注意这里只需要把超时设置为 1 秒</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>颗粒度更小的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const tasks &#x3D; []; &#x2F;&#x2F; 这里存放异步操作的 Promise</span><br><span class="line">const output &#x3D; (i) &#x3D;&gt; new Promise((resolve) &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(new Date, i);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;, 1000 * i);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 生成全部的异步操作</span><br><span class="line">for (var i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">    tasks.push(output(i));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 异步操作完成之后，输出最后的 i</span><br><span class="line">Promise.all(tasks).then(() &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(new Date, i);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>考察点2：ES7 中的 async/await</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 模拟其他语言中的 sleep，实际上可以是任何异步操作</span><br><span class="line">const sleep &#x3D; (timeountMS) &#x3D;&gt; new Promise((resolve) &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(resolve, timeountMS);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">(async () &#x3D;&gt; &#123;  &#x2F;&#x2F; 声明即执行的 async 函数表达式</span><br><span class="line">    for (var i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">        if (i &gt; 0) &#123;</span><br><span class="line">            await sleep(1000);</span><br><span class="line">        &#125;</span><br><span class="line">        console.log(new Date, i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    await sleep(1000);</span><br><span class="line">    console.log(new Date, i);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<p>参考链接：<a href="https://juejin.im/post/58f1fa6a44d904006cf25d22" target="_blank" rel="noopener" title="title">破解前端面试：从闭包说起</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/innovatorblog/tags/%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81/" rel="tag"># 非常重要</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/innovatorblog/2020/06/21/JS%E5%9F%BA%E7%A1%80/JS%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/" rel="next" title="JS事件机制">
+                <i class="fa fa-chevron-left"></i> JS事件机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/innovatorblog/2020/06/25/JS%E5%9F%BA%E7%A1%80/%E4%BD%9C%E7%94%A8%E5%9F%9F/" rel="prev" title="作用域">
+                作用域 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">河马马</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/innovatorblog/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/innovatorblog/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/innovatorblog/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是闭包？"><span class="nav-number">1.</span> <span class="nav-text">什么是闭包？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#要理解闭包为什么存在，需要先了解作用域"><span class="nav-number"></span> <span class="nav-text">要理解闭包为什么存在，需要先了解作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#闭包是怎么读取函数内部变量"><span class="nav-number"></span> <span class="nav-text">闭包是怎么读取函数内部变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#闭包的用途"><span class="nav-number"></span> <span class="nav-text">闭包的用途</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用闭包的注意点"><span class="nav-number"></span> <span class="nav-text">使用闭包的注意点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在工作的场景中，是怎么使用闭包的"><span class="nav-number"></span> <span class="nav-text">在工作的场景中，是怎么使用闭包的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关面试题"><span class="nav-number"></span> <span class="nav-text">相关面试题</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">河马马</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/innovatorblog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/innovatorblog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/innovatorblog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/innovatorblog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/innovatorblog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

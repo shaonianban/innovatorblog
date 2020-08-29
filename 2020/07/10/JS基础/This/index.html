@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/innovatorblog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/innovatorblog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/innovatorblog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/innovatorblog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/innovatorblog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/innovatorblog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/innovatorblog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="非常重要," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="误解this指向了自身因为函数是函数对象，可以在调用函数时存储状态（属性值）。 12345678910111213 function foo(num) &amp;#123;  console.log(&#39;foo:&#39; + num);  this.count++;  console.log(&#39;this是什么&#39;, this); &#x2F;&#x2F; window&amp;#125;fo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="This">
+<meta property="og:url" content="http://yoursite.com/2020/07/10/JS%E5%9F%BA%E7%A1%80/This/index.html">
+<meta property="og:site_name" content="河马马，冲啊">
+<meta property="og:description" content="误解this指向了自身因为函数是函数对象，可以在调用函数时存储状态（属性值）。 12345678910111213 function foo(num) &amp;#123;  console.log(&#39;foo:&#39; + num);  this.count++;  console.log(&#39;this是什么&#39;, this); &#x2F;&#x2F; window&amp;#125;fo">
+<meta property="article:published_time" content="2020-07-10T13:57:52.387Z">
+<meta property="article:modified_time" content="2020-07-12T09:34:58.043Z">
+<meta property="article:author" content="河马马">
+<meta property="article:tag" content="非常重要">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/innovatorblog/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/10/JS基础/This/"/>
+
+
+
+
+
+  <title>This | 河马马，冲啊</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/innovatorblog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">河马马，冲啊</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/innovatorblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/innovatorblog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/innovatorblog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/innovatorblog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/innovatorblog/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/innovatorblog/2020/07/10/JS%E5%9F%BA%E7%A1%80/This/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="河马马">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/innovatorblog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="河马马，冲啊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">This</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-10T21:57:52+08:00">
+                2020-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/innovatorblog/categories/JS%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
+                    <span itemprop="name">JS基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="误解"><a href="#误解" class="headerlink" title="误解"></a>误解</h2><p><strong>this指向了自身</strong><br>因为函数是函数对象，可以在调用函数时存储状态（属性值）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> function foo(num) &#123;</span><br><span class="line">  console.log(&#39;foo:&#39; + num);</span><br><span class="line">  this.count++;</span><br><span class="line">  console.log(&#39;this是什么&#39;, this); &#x2F;&#x2F; window</span><br><span class="line">&#125;</span><br><span class="line">foo.count&#x3D;0</span><br><span class="line">var i;</span><br><span class="line">for (i &#x3D; 0; i &lt; 10; i++) &#123;</span><br><span class="line">  if (i &gt; 5) &#123;</span><br><span class="line">    foo(i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">console.log(foo.count); &#x2F;&#x2F; 0</span><br></pre></td></tr></table></figure>
+<p>如果this是指向自身的话，那这时的foo.count应该为4.但是结果为0，说明并不是指向自身的。</p>
+<p>解决方案：把this强制绑定到foo函数对象上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> function foo(num) &#123;</span><br><span class="line">  console.log(&#39;foo:&#39; + num);</span><br><span class="line">  this.count++;</span><br><span class="line">  console.log(&#39;this是什么&#39;, this); &#x2F;&#x2F; window</span><br><span class="line">&#125;</span><br><span class="line">foo.count&#x3D;0</span><br><span class="line">var i;</span><br><span class="line">for (i &#x3D; 0; i &lt; 10; i++) &#123;</span><br><span class="line">  if (i &gt; 5) &#123;</span><br><span class="line">    foo.call(foo,i); &#x2F;&#x2F; 让this强制绑定为foo函数对象</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">console.log(foo.count) &#x2F;&#x2F; 4</span><br></pre></td></tr></table></figure>
+
+<p><strong>this指向了函数的作用域</strong><br>this任何时候都不指向函数的作用域，作用域跟对象类似，可见的标识都它的属性，但是作用域是无法通过javascript代码访问的。它存在于js的引擎。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function foo()&#123;</span><br><span class="line">  var a &#x3D; 1</span><br><span class="line">  this.bar() &#x2F;&#x2F; 能调用成功是因为这个this指向了window,而bar刚好在window</span><br><span class="line">&#125;</span><br><span class="line">function bar()&#123;</span><br><span class="line">  console.log(this.a)</span><br><span class="line">&#125;</span><br><span class="line">foo() &#x2F;&#x2F; 报错 a is not define</span><br></pre></td></tr></table></figure>
+<p>上面的例子证明了this并非指向词法作用域，如果指向作用域的话，是可以获取到a而并非报错</p>
+<h2 id="this到底是什么"><a href="#this到底是什么" class="headerlink" title="this到底是什么"></a>this到底是什么</h2><p>this跟函数声明的位置没有任何关系，而是在运行时进行绑定的。<br>生活例子：比如有一个炸弹，在越南生产了（声明），但跟结果紧紧相关的是这个炸弹是在哪里爆炸的（运行）。</p>
+<p>当函数被调用时，会有一个执行上下文，包括调用栈，调用方式，this等等。<br>我认为的调用栈，就是目前在哪个函数中运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function baz() &#123;</span><br><span class="line">&#x2F;&#x2F; 当前调用栈是:baz</span><br><span class="line">&#x2F;&#x2F; 因此，当前调用位置是全局作用域</span><br><span class="line">console.log( &quot;baz&quot; );</span><br><span class="line">bar(); &#x2F;&#x2F; &lt;-- bar 的调用位置 &#125;</span><br><span class="line">function bar() &#123; 82</span><br><span class="line">&#x2F;&#x2F; 当前调用栈是 baz -&gt; bar</span><br><span class="line">&#x2F;&#x2F; 因此，当前调用位置在 baz 中</span><br><span class="line">console.log( &quot;bar&quot; );</span><br><span class="line">foo(); &#x2F;&#x2F; &lt;-- foo 的调用位置 &#125;</span><br><span class="line">function foo() &#123;</span><br><span class="line">&#x2F;&#x2F; 当前调用栈是 baz -&gt; bar -&gt; foo &#x2F;&#x2F; 因此，当前调用位置在 bar 中</span><br><span class="line">console.log( &quot;foo&quot; ); &#125;</span><br><span class="line">baz(); &#x2F;&#x2F; &lt;-- baz 的调用位置</span><br></pre></td></tr></table></figure>
+<p>也可以把这段函数运行起来，在首行加debuger,就可以在call stack中看到对应的调用栈。</p>
+<h2 id="绑定规则"><a href="#绑定规则" class="headerlink" title="绑定规则"></a>绑定规则</h2><p><strong>默认绑定</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123; </span><br><span class="line">  console.log( this.a );</span><br><span class="line">&#125;</span><br><span class="line">var a &#x3D; 2; </span><br><span class="line">foo(); &#x2F;&#x2F; 2</span><br></pre></td></tr></table></figure>
+<p>这里的foo()是直接使用不带任何修饰的函数引用进行调用的,所以触发了默认绑定规则，绑定为全局this<br>所以this.a为2</p>
+<p><strong>隐式绑定</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123; console.log( this.a );</span><br><span class="line">&#125;</span><br><span class="line">var obj &#x3D; &#123; a: 2,</span><br><span class="line">foo: foo &#125;;</span><br><span class="line">obj.foo(); &#x2F;&#x2F; 2</span><br></pre></td></tr></table></figure>
+<p>当 foo() 被调用时，它的前面确实加上了对 obj 的引用<br>当函 数引用有上下文对象时，隐式绑定规则会把函数调用中的 this 绑定到这个上下文对象。</p>
+<p>对象属性引用链中只有上一层或者说最后一层在调用位置中起作用。举例来说:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123; console.log( this.a );</span><br><span class="line">&#125;</span><br><span class="line">var obj2 &#x3D; &#123; a: 42,</span><br><span class="line">foo: foo &#125;;</span><br><span class="line">var obj1 &#x3D; &#123; a: 2,</span><br><span class="line">obj2: obj2 &#125;;</span><br><span class="line">obj1.obj2.foo(); &#x2F;&#x2F; 42</span><br></pre></td></tr></table></figure>
+<p>隐式丢失：主要原因是因为赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123; </span><br><span class="line">  console.log( this.a );</span><br><span class="line">&#125;</span><br><span class="line">var obj &#x3D; &#123; </span><br><span class="line">  a: 2,</span><br><span class="line">  foo: foo</span><br><span class="line">&#125;;</span><br><span class="line">var bar &#x3D; obj.foo; &#x2F;&#x2F; 函数别名</span><br><span class="line">var a &#x3D; &quot;oops, global&quot;; &#x2F;&#x2F; a 是全局对象的属性 bar(); &#x2F;&#x2F; &quot;oops, global&quot;</span><br></pre></td></tr></table></figure>
+<p>虽然 bar 是 obj.foo 的一个引用，但是实际上，它引用的是 foo 函数本身。，因此此时的 bar() 其实是一个不带任何修饰的函数调用，因此应用了默认绑定。<br>一种更微妙、更常见并且更出乎意料的情况发生在传入回调函数时:</p>
+<p>2.把函数作为参数传给函数<br>3.即使传给系统函数也会一样的情况</p>
+<h2 id="显式绑定"><a href="#显式绑定" class="headerlink" title="显式绑定"></a>显式绑定</h2><h2 id="new绑定"><a href="#new绑定" class="headerlink" title="new绑定"></a>new绑定</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function foo(a) &#123; this.a &#x3D; a;</span><br><span class="line">&#125;</span><br><span class="line">var bar &#x3D; new foo(2); </span><br><span class="line">console.log( bar.a ); &#x2F;&#x2F; 2</span><br></pre></td></tr></table></figure>
+<p>使用 new 来调用 foo(..) 时，我们会构造一个新对象并把它绑定到 foo(..) 调用中的 this 上。即bar调用时，this为foo。</p>
+<h2 id="他们之间的优先级是什么样的？"><a href="#他们之间的优先级是什么样的？" class="headerlink" title="他们之间的优先级是什么样的？"></a>他们之间的优先级是什么样的？</h2><p><strong>显示和隐式之间的对比</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123; console.log( this.a );</span><br><span class="line">&#125;</span><br><span class="line">var obj1 &#x3D; &#123; </span><br><span class="line">  a: 2,</span><br><span class="line">  foo: foo </span><br><span class="line">&#125;;</span><br><span class="line">var obj2 &#x3D; &#123;</span><br><span class="line">  a: 3,</span><br><span class="line">  foo: foo </span><br><span class="line">&#125;;</span><br><span class="line">obj1.foo.call( obj2 ); &#x2F;&#x2F; 3</span><br></pre></td></tr></table></figure>
+<p>通过obj1.foo.call( obj2 )就可以看出显式是优先于隐式，因为obj1.foo 和 foo.call(obj2)，是后者生效了。</p>
+<p><strong>new 绑定和隐式绑定的对比</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function foo(something) &#123;</span><br><span class="line">  this.a &#x3D; something;</span><br><span class="line">&#125;</span><br><span class="line">var obj1 &#x3D; &#123; foo: foo &#125;;</span><br><span class="line">var obj2 &#x3D; &#123;&#125;;</span><br><span class="line">var bar &#x3D; new obj1.foo(4);</span><br><span class="line">console.log(obj1.a); &#x2F;&#x2F; 2 </span><br><span class="line">console.log( bar.a ); &#x2F;&#x2F; 4</span><br></pre></td></tr></table></figure>
+<p>结果是new绑定要优先了隐式绑定，因为obj1.foo()是隐式， new obj1.foo(4)为new绑定，最后的结果为4。</p>
+<p><strong>new 绑定和显式绑定的对比</strong><br>new 和 call/apply 无法一起使用，因此无法通过 new foo.call(obj1)来直接 进行测试,但是我们可以使用硬绑定来测试它俩的优先级。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/innovatorblog/tags/%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81/" rel="tag"># 非常重要</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/innovatorblog/2020/07/10/JS%E5%9F%BA%E7%A1%80/ES6/" rel="next" title="ES6知识">
+                <i class="fa fa-chevron-left"></i> ES6知识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/innovatorblog/2020/07/29/%E7%BD%91%E7%BB%9C/URL%E8%A7%A3%E6%9E%90/" rel="prev" title="url解析">
+                url解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">河马马</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/innovatorblog/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/innovatorblog/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/innovatorblog/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#误解"><span class="nav-number">1.</span> <span class="nav-text">误解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this到底是什么"><span class="nav-number">2.</span> <span class="nav-text">this到底是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绑定规则"><span class="nav-number">3.</span> <span class="nav-text">绑定规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显式绑定"><span class="nav-number">4.</span> <span class="nav-text">显式绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new绑定"><span class="nav-number">5.</span> <span class="nav-text">new绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#他们之间的优先级是什么样的？"><span class="nav-number">6.</span> <span class="nav-text">他们之间的优先级是什么样的？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">河马马</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/innovatorblog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/innovatorblog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/innovatorblog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/innovatorblog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/innovatorblog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/innovatorblog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
